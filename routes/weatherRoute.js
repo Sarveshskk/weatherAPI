@@ -6,6 +6,6 @@ let weatherRouter = express.Router(),
     
 } = require("../controller/weatherController");
 
-weatherRouter.put("/search",search);
+weatherRouter.post("/search",search);
 
 module.exports = weatherRouter;
