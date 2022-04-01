@@ -3,17 +3,19 @@ const axios = require("axios");
 let APIkey = process.env.WEATHER_API_KEY;
 
 exports.search = async (req, res) => {
-    try {
 
+    try {
         let zipCode = req.body.zipCode;
         let countryCode = req.body.countryCode;
-        let weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},${countryCode}&appid=${APIkey}`);
-        if (!weatherData.data) {
-            res.status(400).json("Error!please type correct.");
+        try {
+            let weatherData = await axios.get(`https://api.openweathermap.org/data/2.5/weather?zip=${zipCode},${countryCode}&appid=${APIkey}`);
+            res.status(200).json(weatherData.data);
+        } catch (error) {
+            res.status(400).json("please type correct zip code");
         }
-        res.status(200).json(weatherData.data);
+        
     }
     catch (err) {
-        res.status(404).json(err.message);
+        res.status(500).json(err.message);
     }
 };
